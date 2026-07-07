@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foruma arhīvs — LatLUG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --carmine:#9E3039; --carmine-dark:#7C2229; --yellow:#F6C445;
+    --ink:#22252A; --ink-soft:#5B6068; --paper:#FBFBFA; --card:#FFFFFF;
+    --line:#E6E4E0; --radius:14px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Instrument Sans',system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.6}
+  h1,h2,h3{font-family:'Bricolage Grotesque',sans-serif;line-height:1.1}
+  a{color:inherit}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  :focus-visible{outline:3px solid var(--yellow);outline-offset:2px;border-radius:4px}
+
+  header{position:sticky;top:0;z-index:50;background:rgba(251,251,250,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;gap:28px;height:68px}
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-family:'Bricolage Grotesque';font-weight:800;font-size:1.35rem;letter-spacing:-.02em}
+  .flag-mark{width:38px;height:28px;border-radius:4px;overflow:hidden;display:grid;grid-template-rows:2fr 1fr 2fr;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+  .flag-mark span:nth-child(1),.flag-mark span:nth-child(3){background:var(--carmine)}
+  .flag-mark span:nth-child(2){background:#fff}
+  nav.menu{display:flex;gap:4px;margin-left:auto}
+  nav.menu a{text-decoration:none;font-weight:500;font-size:.95rem;color:var(--ink-soft);padding:8px 14px;border-radius:8px;transition:background .15s,color .15s}
+  nav.menu a:hover{background:#F0EEEA;color:var(--ink)}
+  nav.menu a.active{background:var(--ink);color:#fff}
+  .lang-tile{display:flex;border:2px solid var(--ink);border-radius:10px;overflow:hidden;font-family:'Bricolage Grotesque';font-weight:600;font-size:.85rem}
+  .lang-tile button{border:0;background:transparent;padding:7px 14px;cursor:pointer;font:inherit;color:var(--ink-soft);position:relative}
+  .lang-tile button::before{content:"";position:absolute;top:3px;left:50%;transform:translateX(-50%);width:6px;height:3px;border-radius:50%/60%;background:currentColor;opacity:.35}
+  .lang-tile button.active{background:var(--ink);color:var(--yellow)}
+
+  .page-head{background:var(--carmine);color:#fff}
+  .page-head .inner{padding:52px 0 56px}
+  .page-head h1{font-size:clamp(2rem,4vw,3rem);font-weight:800;letter-spacing:-.02em;margin-bottom:12px}
+  .page-head p{max-width:44rem;color:rgba(255,255,255,.88)}
+  .studs{height:18px;background-color:var(--carmine-dark);background-image:radial-gradient(circle 6px at 14px 9px, rgba(255,255,255,.28) 5.5px, transparent 6px);background-size:36px 18px}
+
+  .notice{
+    margin:36px 0 0;background:#FBEFD2;border:1px solid #EAD79E;border-radius:12px;
+    padding:18px 22px;font-size:.95rem;color:#6B5210;display:flex;gap:14px;align-items:flex-start;
+  }
+  .notice .ic{flex:none;width:26px;height:26px;border-radius:6px;background:var(--yellow);display:grid;place-items:center;font-weight:800;font-family:'Bricolage Grotesque';color:var(--ink)}
+
+  section{padding:48px 0 72px}
+  .cats{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+  .cat{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:26px;text-decoration:none;display:flex;flex-direction:column;gap:10px;
+    transition:transform .15s,box-shadow .15s;position:relative;
+  }
+  .cat:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(0,0,0,.09)}
+  .cat::before{
+    content:"";position:absolute;top:-7px;left:22px;width:44px;height:14px;border-radius:5px 5px 0 0;
+    background:var(--carmine);
+    background-image:radial-gradient(circle 4px at 25% 45%, rgba(255,255,255,.3) 3.5px, transparent 4px),
+                     radial-gradient(circle 4px at 75% 45%, rgba(255,255,255,.3) 3.5px, transparent 4px);
+  }
+  .cat h3{font-size:1.25rem}
+  .cat p{color:var(--ink-soft);font-size:.93rem;flex:1}
+  .stats{display:flex;gap:18px;font-size:.85rem;color:var(--ink-soft);border-top:1px solid var(--line);padding-top:14px}
+  .stats b{color:var(--ink);font-weight:600}
+
+  .cta-box{margin-top:48px;background:var(--ink);color:#fff;border-radius:16px;padding:36px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+  .cta-box h2{font-size:1.4rem;letter-spacing:-.01em}
+  .cta-box p{color:rgba(255,255,255,.75);font-size:.95rem}
+  .btn{display:inline-block;text-decoration:none;font-weight:600;padding:13px 24px;border-radius:12px;background:var(--yellow);color:var(--ink);box-shadow:0 4px 0 #C99A1F;transition:transform .15s}
+  .btn:hover{transform:translateY(-2px)}
+
+  footer{background:var(--ink);color:rgba(255,255,255,.75)}
+  .foot-note{padding:24px 0;font-size:.85rem;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+  @media (max-width:900px){
+    .cats{grid-template-columns:1fr}
+    nav.menu{display:none}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="index.html">
+      <span class="flag-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+      LatLUG
+    </a>
+    <nav class="menu">
+      <a href="index.html#jaunumi" data-lv="Jaunumi" data-en="News">Jaunumi</a>
+      <a href="index.html#pasakumi" data-lv="Pasākumi" data-en="Events">Pasākumi</a>
+      <a href="forum.html" class="active" data-lv="Forums" data-en="Forum">Forums</a>
+      <a href="index.html#pievienojies" data-lv="Pievienojies" data-en="Join us">Pievienojies</a>
+    </nav>
+    <div class="lang-tile" role="group" aria-label="Valoda / Language">
+      <button id="btn-lv" class="active" onclick="setLang('lv')">LV</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</header>
+
+<div class="page-head">
+  <div class="wrap inner">
+    <h1 data-lv="Foruma arhīvs" data-en="Forum archive">Foruma arhīvs</h1>
+    <p data-lv="Vairāk nekā desmit gadu kopienas sarunu — pasākumu organizēšana, būvēšanas padomi un MOC apspriedes. Forums saglabāts kā lasāms arhīvs."
+       data-en="Over a decade of community conversations — event planning, building tips and MOC discussions. The forum is preserved as a read-only archive.">
+      Vairāk nekā desmit gadu kopienas sarunu — pasākumu organizēšana, būvēšanas padomi un MOC apspriedes. Forums saglabāts kā lasāms arhīvs.</p>
+  </div>
+  <div class="studs" aria-hidden="true"></div>
+</div>
+
+<div class="wrap">
+  <div class="notice">
+    <span class="ic">i</span>
+    <span data-lv="Jaunas diskusijas notiek mūsu Facebook grupā. Šeit vari lasīt un meklēt vēsturiskās tēmas — tās vairs nav rediģējamas."
+          data-en="New discussions happen in our Facebook group. Here you can read and search the historical topics — they can no longer be edited.">
+      Jaunas diskusijas notiek mūsu Facebook grupā. Šeit vari lasīt un meklēt vēsturiskās tēmas — tās vairs nav rediģējamas.</span>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="cats">
+      <a class="cat" href="#">
+        <h3 data-lv="Pasākumi" data-en="Events">Pasākumi</h3>
+        <p data-lv="Izstāžu, festivālu un tikšanos organizēšana — no WinterCon līdz UniCon." data-en="Organising exhibitions, festivals and meetups — from WinterCon to UniCon.">Izstāžu, festivālu un tikšanos organizēšana — no WinterCon līdz UniCon.</p>
+        <div class="stats"><span><b>63</b> <span data-lv="tēmas" data-en="topics">tēmas</span></span><span><b>738</b> <span data-lv="ziņas" data-en="posts">ziņas</span></span><span data-lv="Pēdējā: 2021" data-en="Last: 2021">Pēdējā: 2021</span></div>
+      </a>
+      <a class="cat" href="#">
+        <h3 data-lv="Atbalsts" data-en="Support">Atbalsts</h3>
+        <p data-lv="Jautājumi un palīdzība — detaļas, komplekti, būvēšanas tehnikas." data-en="Questions and help — parts, sets, building techniques.">Jautājumi un palīdzība — detaļas, komplekti, būvēšanas tehnikas.</p>
+        <div class="stats"><span><b>52</b> <span data-lv="tēmas" data-en="topics">tēmas</span></span><span><b>417</b> <span data-lv="ziņas" data-en="posts">ziņas</span></span><span data-lv="Pēdējā: 2019" data-en="Last: 2019">Pēdējā: 2019</span></div>
+      </a>
+      <a class="cat" href="#">
+        <h3 data-lv="Attīstība" data-en="Development">Attīstība</h3>
+        <p data-lv="Kopienas un mājaslapas attīstības idejas un plāni." data-en="Ideas and plans for growing the community and the website.">Kopienas un mājaslapas attīstības idejas un plāni.</p>
+        <div class="stats"><span><b>30</b> <span data-lv="tēmas" data-en="topics">tēmas</span></span><span><b>259</b> <span data-lv="ziņas" data-en="posts">ziņas</span></span><span data-lv="Pēdējā: 2019" data-en="Last: 2019">Pēdējā: 2019</span></div>
+      </a>
+      <a class="cat" href="#">
+        <h3 data-lv="Biedrība" data-en="Association">Biedrība</h3>
+        <p data-lv="Biedrības lietas — sapulces, lēmumi, organizatoriskie jautājumi." data-en="Association matters — meetings, decisions, organisational topics.">Biedrības lietas — sapulces, lēmumi, organizatoriskie jautājumi.</p>
+        <div class="stats"><span><b>25</b> <span data-lv="tēmas" data-en="topics">tēmas</span></span><span><b>129</b> <span data-lv="ziņas" data-en="posts">ziņas</span></span><span data-lv="Pēdējā: 2023" data-en="Last: 2023">Pēdējā: 2023</span></div>
+      </a>
+      <a class="cat" href="#">
+        <h3 data-lv="MOCi un Modeļi" data-en="MOCs & Models">MOCi un Modeļi</h3>
+        <p data-lv="Pašu radītās būves — apraksti, foto un atsauksmes." data-en="Members' own creations — write-ups, photos and feedback.">Pašu radītās būves — apraksti, foto un atsauksmes.</p>
+        <div class="stats"><span><b>20</b> <span data-lv="tēmas" data-en="topics">tēmas</span></span><span><b>99</b> <span data-lv="ziņas" data-en="posts">ziņas</span></span><span data-lv="Pēdējā: 2017" data-en="Last: 2017">Pēdējā: 2017</span></div>
+      </a>
+      <a class="cat" href="#">
+        <h3 data-lv="Konkursi" data-en="Contests">Konkursi</h3>
+        <p data-lv="Būvēšanas konkursi, noteikumi un rezultāti." data-en="Building contests, rules and results.">Būvēšanas konkursi, noteikumi un rezultāti.</p>
+        <div class="stats"><span><b>8</b> <span data-lv="tēmas" data-en="topics">tēmas</span></span><span><b>13</b> <span data-lv="ziņas" data-en="posts">ziņas</span></span><span data-lv="Pēdējā: 2020" data-en="Last: 2020">Pēdējā: 2020</span></div>
+      </a>
+    </div>
+
+    <div class="cta-box">
+      <div>
+        <h2 data-lv="Meklē dzīvās diskusijas?" data-en="Looking for live discussions?">Meklē dzīvās diskusijas?</h2>
+        <p data-lv="Kopienas ikdienas sarunas tagad notiek Facebook grupā." data-en="Day-to-day community conversations now happen in our Facebook group.">Kopienas ikdienas sarunas tagad notiek Facebook grupā.</p>
+      </div>
+      <a class="btn" href="#" data-lv="Uz Facebook grupu" data-en="To the Facebook group">Uz Facebook grupu</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-note">
+    <span>© 2026 LatLUG</span>
+    <span data-lv="Dizaina prototips — arhīva saturs tiks migrēts" data-en="Design prototype — archive content to be migrated">Dizaina prototips — arhīva saturs tiks migrēts</span>
+  </div>
+</footer>
+
+<script>
+  function setLang(l){
+    document.documentElement.lang = l;
+    document.querySelectorAll('[data-lv]').forEach(el=>{ el.textContent = el.getAttribute('data-' + l); });
+    document.getElementById('btn-lv').classList.toggle('active', l==='lv');
+    document.getElementById('btn-en').classList.toggle('active', l==='en');
+  }
+</script>
+</body>
+</html>
