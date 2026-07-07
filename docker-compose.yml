@@ -1,0 +1,9 @@
+services:
+  latlug-web:
+    build:
+      context: .
+    image: latlug-web:latest
+    container_name: latlug-web
+    ports:
+      - "8085:80"
+    restart: unless-stopped
