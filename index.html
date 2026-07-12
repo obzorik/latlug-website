@@ -58,6 +58,18 @@ section{padding:72px 0}
 .date-brick{flex:none;width:84px;text-align:center;background:var(--carmine);color:#fff;border-radius:10px;padding:12px 8px 14px;box-shadow:0 4px 0 var(--carmine-dark);font-family:'Bricolage Grotesque'}
 .date-brick .d{font-size:1.7rem;font-weight:800;line-height:1}
 .date-brick .m{font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.date-brick.m1{background:#2B6CB0;box-shadow:0 4px 0 #21538A}
+.date-brick.m2{background:#6B46C1;box-shadow:0 4px 0 #533597}
+.date-brick.m3{background:#0C8599;box-shadow:0 4px 0 #096776}
+.date-brick.m4{background:#2F9E44;box-shadow:0 4px 0 #247A34}
+.date-brick.m5{background:#66A80F;box-shadow:0 4px 0 #4F810B}
+.date-brick.m6{background:#D97706;box-shadow:0 4px 0 #A85B05}
+.date-brick.m7{background:#9E3039;box-shadow:0 4px 0 #7C2229}
+.date-brick.m8{background:#C92A2A;box-shadow:0 4px 0 #9C2121}
+.date-brick.m9{background:#A61E4D;box-shadow:0 4px 0 #801739}
+.date-brick.m10{background:#D9480F;box-shadow:0 4px 0 #A83A0C}
+.date-brick.m11{background:#795548;box-shadow:0 4px 0 #5D4037}
+.date-brick.m12{background:#364FC7;box-shadow:0 4px 0 #2A3E9C}
 .event-card h3{font-size:1.2rem;margin-bottom:6px}.event-card p{color:var(--ink-soft);font-size:.95rem}
 .tag{display:inline-block;margin-top:12px;font-size:.78rem;font-weight:600;background:#FBEFD2;color:#8A6510;padding:4px 10px;border-radius:6px}
 .news-bg{background:#F2F1EE}
@@ -170,5 +182,17 @@ footer .studs{background-color:#171a1e}
 
 <script>
 let lang='lv';function setLang(l){lang=l;document.documentElement.lang=l;document.querySelectorAll('[data-lv]').forEach(el=>{el.textContent=el.getAttribute('data-'+l)});document.getElementById('btn-lv').classList.toggle('active',l==='lv');document.getElementById('btn-en').classList.toggle('active',l==='en')}
+</script>
+<script>
+/* Month colors for event date bricks */
+(function(){
+  var M={jan:1,feb:2,mar:3,apr:4,may:5,jun:6,jul:7,aug:8,sep:9,oct:10,nov:11,dec:12,
+         mai:5,jūn:6,jūl:7,okt:10};
+  document.querySelectorAll('.date-brick').forEach(function(b){
+    var m=b.querySelector('.m'); if(!m) return;
+    var key=(m.getAttribute('data-en')||m.textContent).trim().toLowerCase().slice(0,3);
+    if(M[key]) b.classList.add('m'+M[key]);
+  });
+})();
 </script>
 </body></html>
