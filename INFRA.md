@@ -131,3 +131,12 @@ Renew before then or pushes/API triggers from tooling stop working.
 | Portainer admin password | localhost:9443 |
 | StudsUp admin login | georgs@studsup.com (demo password) |
 | StudsUp test users | brickfan@ / newbrick@ studsup.eu |
+
+## Serving (since 2026-07-12)
+Docker/systemd approach dropped. Site is served as static files by the main
+Nginx on the shared Hetzner server (65.21.152.243):
+- URL: https://studsup.eu/latlug/  (location /latlug/ -> alias /app/latlug/)
+- Also ready on port 80 for latlug.lv / www.latlug.lv when DNS points here
+- Deploy: run `latlug-deploy` on the server (downloads repo zip, copies *.html
+  + asset dirs to /app/latlug, reloads nginx). Callable via studsup-ssh:
+  `docker exec studsup-ssh ssh-hetzner "latlug-deploy"`
