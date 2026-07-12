@@ -1,4 +1,4 @@
-name: Deploy LatLUG Demo
+hname: Deploy LatLUG Demo
 
 on:
   push:
@@ -13,8 +13,7 @@ jobs:
       
       - name: Deploy to Hetzner
         env:
-          DEPLOY_KEY: ${{ secrets.HETZNER_DEPLOY_KEY }}
-          DEPLOY_HOST: ${{ secrets.HETZNER_HOST }}
+    DEPLOY_KEY: ${{ secrets.HETZNER_DEPLOY_KEY_V2 }}          DEPLOY_HOST: ${{ secrets.HETZNER_HOST }}
         run: |
           mkdir -p ~/.ssh
           echo "$DEPLOY_KEY" > ~/.ssh/id_ed25519
