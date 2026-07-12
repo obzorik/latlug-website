@@ -1,0 +1,19 @@
+name: Deploy LatLUG to Hetzner
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Hetzner
+        env:
+          SERVER_PASS: ${{ secrets.SERVER_PASS }}
+        run: |
+          sudo apt-get install -y sshpass
+          sshpass -p "$SERVER_PASS" ssh -o StrictHostKeyChecking=no \
+            -o UserKnownHostsFile=/dev/null \
+            root@65.21.152.243 "latlug-deploy"
